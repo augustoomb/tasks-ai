@@ -8,8 +8,7 @@ const handler = NextAuth({
 
   pages: {
     signIn: "/login",
-  },
-  
+  },  
 
   providers: [
     CredentialsProvider({

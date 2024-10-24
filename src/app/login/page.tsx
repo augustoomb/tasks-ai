@@ -7,7 +7,7 @@ export default async function Login() {
     const session = await getServerSession();
 
     if (session) {
-        console.log("session", session);
+        // console.log("session", session);
         redirect("/home");
     }
 

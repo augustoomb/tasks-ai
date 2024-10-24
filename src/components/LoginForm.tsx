@@ -43,8 +43,6 @@ export function LoginForm() {
    
     // Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-    //   console.log(values)
-
         try {
             const response: any = await signIn("credentials", {
                 email: values.email,
@@ -61,9 +59,9 @@ export function LoginForm() {
                 throw new Error("Network response was not ok");
             }
     
-            console.log("Login Successful", response);
+            console.log("Login realizado com sucesso!", response);
         } catch (error) {
-            console.error("Login Failed:", error);
+            console.error("Login Falhou:", error);
         }
         
     }
