@@ -1,7 +1,16 @@
 import { LoginForm } from "@/components/LoginForm"
-import Image from "next/image"
+import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function Login() {
+export default async function Login() {
+    const session = await getServerSession();
+
+    if (session) {
+        console.log("session", session);
+        redirect("/home");
+    }
+
     return(
         <main className="flex w-screen h-screen md:px-8 md:py-4 md:gap-x-8">            
             <section className="flex-1 flex justify-center">

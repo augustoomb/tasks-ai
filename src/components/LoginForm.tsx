@@ -6,6 +6,8 @@ import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {
     Form,
     FormControl,
@@ -28,6 +30,8 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+    const router = useRouter();
+
     // Define form.
     const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
@@ -38,8 +42,30 @@ export function LoginForm() {
     })
    
     // Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-      console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+    //   console.log(values)
+
+        try {
+            const response: any = await signIn("credentials", {
+                email: values.email,
+                password: values.password,
+                redirect: false,
+            });
+    
+            if (!response?.error) {
+                router.push("/home");
+                router.refresh();
+            }
+    
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+    
+            console.log("Login Successful", response);
+        } catch (error) {
+            console.error("Login Failed:", error);
+        }
+        
     }
 
     return (        
