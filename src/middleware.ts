@@ -8,7 +8,8 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Permitir o acesso à página de login e APIs sem sessão
-  if (pathname.startsWith("/login") || pathname.startsWith("/api/auth")) {
+  // if (pathname.startsWith("/login") || pathname.startsWith("/api/auth")) {
+  if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
     return NextResponse.next();
   }
 
