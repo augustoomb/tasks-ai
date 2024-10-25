@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { loginFormSchema } from "@/schemas/formSchemas/loginFormSchema";
+import { registerFormSchema } from "@/schemas/formSchemas/registerFormSchema";
 import {
     Form,
     FormControl,
@@ -19,20 +19,22 @@ import {
     FormMessage,
   } from "@/components/ui/form"
 
-export function LoginForm() {
+export function RegisterForm() {
     const router = useRouter();
 
     // Define form.
-    const form = useForm<z.infer<typeof loginFormSchema>>({
-      resolver: zodResolver(loginFormSchema),
+    const form = useForm<z.infer<typeof registerFormSchema>>({
+      resolver: zodResolver(registerFormSchema),
       defaultValues: {
+        name: "",
+        phone: "",
         email: "",
         password: "",
       },
     })
    
     // Define a submit handler.
-    async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+    async function onSubmit(values: z.infer<typeof registerFormSchema>) {
         try {
             const response: any = await signIn("credentials", {
                 email: values.email,
