@@ -20,9 +20,12 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         await new Promise((resolve) => setTimeout(resolve, 500));
         const user = { id: "1", email: "j@j.com" };
+
+        // console.log("credentials: "+JSON.stringify(credentials))
+        // console.log("req: "+JSON.stringify(req))
+
         if (user) { return user;  }
 
-        console.log("credentials", credentials);
         return null;
       },
     }),
