@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { loginFormSchema } from "@/schemas/formSchemas/loginFormSchema";
+import { userSchema } from "@/schemas";
+import { toast } from "sonner"
+import Link from "next/link";
 import {
     Form,
     FormControl,
@@ -17,10 +19,12 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "@/components/ui/form";
 
 export function LoginForm() {
     const router = useRouter();
+
+    const loginFormSchema = userSchema.pick({ email: true, password: true });
 
     // Define form.
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -39,21 +43,21 @@ export function LoginForm() {
                 password: values.password,
                 redirect: false,
             });
-    
-            if (!response?.error) {
+
+            if (response.ok) {
+                toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
                 router.push("/home");
                 router.refresh();
+                
+            } else {
+                const infoResponse = await response.json();
+                throw new Error(JSON.stringify(infoResponse));
             }
-    
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-    
-            console.log("Login realizado com sucesso!", response);
+
         } catch (error) {
-            console.error("Login Falhou:", error);
-        }
-        
+            toast.error(String(error));
+            console.error(String(error));
+        }        
     }
 
     return (        
@@ -98,8 +102,12 @@ export function LoginForm() {
                 />
                 <Button type="submit">Entrar</Button>
                 <div className="text-xs text-center">
-                    <p>Esqueci minha senha</p>
-                    <p>Não possui uma conta? <span className="underline underline-offset-1">Cadastre-se</span></p>
+                    <Link className="underline underline-offset-1" href="">Esqueci minha senha</Link>
+                    <p>Não possui uma conta?&nbsp;
+                        <Link href="/register">
+                            <span className="underline underline-offset-1">Cadastre-se</span>                        
+                        </Link>
+                    </p>
                 </div> 
             </form>
         </Form> 
