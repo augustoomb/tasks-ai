@@ -35,7 +35,15 @@ export async function POST(req: Request) {
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
             if (e.code === 'P2002') {
-                return NextResponse.json({ error: 'E-mail já existe' }, { status: 409 });
+                // return NextResponse.json({ error: 'E-mail já existe' }, { status: 409 });
+                return NextResponse.json({
+                    "errors": [
+                        {
+                            "field": "email",
+                            "message": "E-mail já existe"
+                        }
+                    ]
+                }, { status: 409 });
             }
             return NextResponse.json({ error: e }, { status: 500 });
         }
