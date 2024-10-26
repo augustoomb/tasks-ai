@@ -14,5 +14,5 @@ model User {
   password  String
   name      String
   phone     String?
-  status    Boolean  @default(false)
+  status    Boolean  @default(true)
 }
