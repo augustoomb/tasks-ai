@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-const bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
