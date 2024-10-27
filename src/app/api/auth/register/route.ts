@@ -1,6 +1,6 @@
-import { z, ZodIssue } from 'zod';
+import { ZodIssue } from 'zod';
 import prisma from '@/lib/prisma';
-import { User, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from 'next/server';
 import { cryptPass } from '@/lib/utils';
 import { userSchema } from '@/schemas';
@@ -35,7 +35,6 @@ export async function POST(req: Request) {
     } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
             if (e.code === 'P2002') {
-                // return NextResponse.json({ error: 'E-mail já existe' }, { status: 409 });
                 return NextResponse.json({
                     "errors": [
                         {
