@@ -44,18 +44,19 @@ export function LoginForm() {
                 redirect: false,
             });
 
+            console.log("LOGIN_SUBMIT: response", response);
+
             if (response.ok) {
                 toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
                 router.push("/home");
                 router.refresh();
                 
             } else {
-                const infoResponse = await response.json();
-                throw new Error(JSON.stringify(infoResponse));
+                throw new Error(JSON.stringify(response));
             }
 
         } catch (error) {
-            toast.error(String(error));
+            toast.error("Credenciais inválidas ou inexistentes. Tente novamente.");
             console.error(String(error));
         }        
     }

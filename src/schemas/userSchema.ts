@@ -10,7 +10,6 @@ export const userSchema = z.object({
         .max(50, {message: "Nome deve ter menos de 50 caracteres"}),
     phone: z
         .string({ invalid_type_error: "Telefone deve ser um campo de texto" })
-        // .length(11, {message: "Telefone deve ter 11 caracteres"})
         .optional(),
     email: z
         .string({
