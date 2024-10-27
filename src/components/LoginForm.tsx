@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { userSchema } from "@/schemas";
 import { toast } from "sonner"
 import Link from "next/link";
+import { Progress } from "@/components/ui/progress"
+import { useState, useEffect } from "react";
 import {
     Form,
     FormControl,
@@ -23,6 +25,8 @@ import {
 
 export function LoginForm() {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const loginFormSchema = userSchema.pick({ email: true, password: true });
 
@@ -37,6 +41,9 @@ export function LoginForm() {
    
     // Define a submit handler.
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+        setIsLoading(true); // Inicia a barra de progresso
+        setProgress(20);
+
         try {
             const response: any = await signIn("credentials", {
                 email: values.email,
@@ -44,9 +51,8 @@ export function LoginForm() {
                 redirect: false,
             });
 
-            console.log("LOGIN_SUBMIT: response", response);
-
             if (response.ok) {
+                setProgress(100);
                 toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
                 router.push("/home");
                 router.refresh();
@@ -58,8 +64,25 @@ export function LoginForm() {
         } catch (error) {
             toast.error("Credenciais inválidas ou inexistentes. Tente novamente.");
             console.error(String(error));
-        }        
+            setProgress(0);
+        } finally {
+            setTimeout(() => {
+              setIsLoading(false);
+              setProgress(0);
+            }, 1000);   
+        }    
     }
+
+    // Atualiza o progresso gradualmente enquanto carrega
+    useEffect(() => {
+        if (isLoading && progress < 100) {
+            // define um temporizador que dispara após 500ms.
+            // Quando o temporizador expira, ele executa uma função que atualiza o estado progress, incrementando o valor anterior (prev) em 40, mas limitando-o ao máximo de 100
+            // Math.min: assegura que o valor de progress nunca exceda 100
+            const timer = setTimeout(() => setProgress((prev) => Math.min(prev + 40, 100)), 500);
+            return () => clearTimeout(timer);
+        }
+    }, [isLoading, progress]); // toda vez que isLoading ou progress mudarem
 
     return (        
         <Form {...form}>
@@ -68,7 +91,11 @@ export function LoginForm() {
                 <div className="space-y-4">                                     
                     <h1 className="text-3xl font-bold md:text-left text-center ">Login</h1>
                     <p className="text-sm text-zinc-500">Insira os seus dados para entrar</p>
-                </div>    
+                </div> 
+
+                {/* Barra de progresso */}
+                {isLoading && <Progress value={progress} className="w-full" />}
+
                 <FormField
                     control={form.control}
                     name="email"
@@ -101,7 +128,9 @@ export function LoginForm() {
                         </FormItem>
                     )}                    
                 />
-                <Button type="submit">Entrar</Button>
+                <Button type="submit" disabled={isLoading}>
+                    {isLoading ? "Entrando..." : "Entrar"}
+                </Button>
                 <div className="text-xs text-center">
                     <Link className="underline underline-offset-1" href="">Esqueci minha senha</Link>
                     <p>Não possui uma conta?&nbsp;
