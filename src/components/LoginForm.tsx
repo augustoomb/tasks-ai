@@ -1,66 +1,52 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { signIn } from "next-auth/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { loginFormSchema } from "@/schemas/forms/loginFormSchema";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Form } from "@/components/ui/form";
 import { CustomFormField } from "./CustomFormField";
 import LoadingProgressBar from "./LoadingProgressBar";
 import HeaderForm from "./HeaderForm";
+import { loginUser } from "@/lib/loginUser";
 
 export function LoginForm() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [progress, setProgress] = useState(0);    
 
-    // Define form.
     const form = useForm<z.infer<typeof loginFormSchema>>({
       resolver: zodResolver(loginFormSchema),
       defaultValues: {
         email: "",
         password: "",
       },
-    })
+    });
    
-    // Define a submit handler.
     async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         setIsLoading(true); // Inicia a barra de progresso
         setProgress(20);
 
-        try {
-            const response: any = await signIn("credentials", {
-                email: values.email,
-                password: values.password,
-                redirect: false,
-            });
+        const result = await loginUser(values);
 
-            if (response.ok) {
-                setProgress(100);
-                toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
-                router.push("/home");
-                router.refresh();
-                
-            } else {
-                throw new Error(JSON.stringify(response));
-            }
-
-        } catch (error) {
-            toast.error("Credenciais inválidas ou inexistentes. Tente novamente.");
-            console.error(String(error));
+        if (result.success) {
+            setProgress(100);
+            toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
+            router.push("/home");
+        } else {
+            toast.error(result.message);
             setProgress(0);
-        } finally {
-            setTimeout(() => {
-              setIsLoading(false);
-              setProgress(0);
-            }, 1000);   
-        }    
+        }
+
+        setTimeout(() => {
+            setIsLoading(false);
+            setProgress(0);
+        }, 1000);
     }
 
     // Atualiza o progresso gradualmente enquanto carrega
