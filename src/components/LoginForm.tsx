@@ -1,8 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -11,11 +9,11 @@ import { useRouter } from "next/navigation";
 import { loginFormSchema } from "@/schemas/forms/loginFormSchema";
 import { toast } from "sonner"
 import Link from "next/link";
-import { Progress } from "@/components/ui/progress"
 import { useState, useEffect } from "react";
 import { Form } from "@/components/ui/form";
 import { CustomFormField } from "./CustomFormField";
 import LoadingProgressBar from "./LoadingProgressBar";
+import HeaderForm from "./HeaderForm";
 
 export function LoginForm() {
     const router = useRouter();
@@ -66,11 +64,11 @@ export function LoginForm() {
     }
 
     // Atualiza o progresso gradualmente enquanto carrega
+    // define um temporizador que dispara após 500ms.
+    // Quando o temporizador expira, ele executa uma função que atualiza o estado progress, incrementando o valor anterior (prev) em 40, mas limitando-o ao máximo de 100
+    // Math.min: assegura que o valor de progress nunca exceda 100
     useEffect(() => {
-        if (isLoading && progress < 100) {
-            // define um temporizador que dispara após 500ms.
-            // Quando o temporizador expira, ele executa uma função que atualiza o estado progress, incrementando o valor anterior (prev) em 40, mas limitando-o ao máximo de 100
-            // Math.min: assegura que o valor de progress nunca exceda 100
+        if (isLoading && progress < 100) {            
             const timer = setTimeout(() => setProgress((prev) => Math.min(prev + 40, 100)), 500);
             return () => clearTimeout(timer);
         }
@@ -79,11 +77,8 @@ export function LoginForm() {
     return (        
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="md:w-1/2 flex flex-col self-center space-y-4">
-                <Image className="xl:hidden place-self-center" src="/blacklogo.png" alt="Logo" width={100} height={100} />
-                <div className="space-y-4">                                     
-                    <h1 className="text-3xl font-bold md:text-left text-center ">Login</h1>
-                    <p className="text-sm text-zinc-500">Insira os seus dados para entrar</p>
-                </div> 
+
+                <HeaderForm title="Login" description="Insira os seus dados para entrar"/>
 
                 <LoadingProgressBar isLoading={isLoading} progress={progress} />
 
