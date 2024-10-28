@@ -19,6 +19,8 @@ import {
     FormLabel,
     FormMessage,
   } from "@/components/ui/form"
+import HeaderForm from "./HeaderForm";
+import { CustomFormField } from "./CustomFormField";
 
 
 export function RegisterForm() {
@@ -67,75 +69,17 @@ export function RegisterForm() {
     return (        
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="md:w-1/2 flex flex-col self-center space-y-4">
-                <Image className="xl:hidden place-self-center" src="/blacklogo.png" alt="Logo" width={100} height={100} />
-                <div className="space-y-4">                                     
-                    <h1 className="text-3xl font-bold md:text-left text-center ">Cadastro</h1>
-                    <p className="text-sm text-zinc-500">Insira os seus dados para se cadastrar</p>
-                </div>    
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                                <Input type="text" placeholder="Fulano de Tal" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite seu nome
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
-                <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Telefone(opcional)</FormLabel>
-                            <FormControl>
-                                <Input type="text" placeholder="xx xxxx xxxx" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite seu telefone
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>E-mail</FormLabel>
-                            <FormControl>
-                                <Input type="email" placeholder="fulano@email.com" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite seu e-mail
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Senha</FormLabel>
-                            <FormControl>
-                                <Input type="password" placeholder="********" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite sua senha(min. 6 caracteres, max. 12)
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
+                
+                <HeaderForm title="Cadastro" description="Insira os seus dados para se cadastrar"/>
+                
+                <CustomFormField control={form.control} name="name" label="Nome" type="text" placeholder="Fulano de Tal" description="Digite seu nome"/>
+                
+                <CustomFormField control={form.control} name="phone" label="Telefone" type="text" placeholder="xx xxxx xxxx" description="Digite seu telefone"/>
+                
+                <CustomFormField control={form.control} name="email" label="E-mail" type="email" placeholder="fulano@email.com" description="Digite seu e-mail" />
+
+                <CustomFormField control={form.control} name="password" label="Senha" type="password" placeholder="********" description="Digite sua senha" />
+                
                 <Button type="submit">Cadastrar</Button>
                 <div className="text-xs text-center">
                     <p>Já possui uma conta?&nbsp;
