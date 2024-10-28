@@ -8,27 +8,19 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { userSchema } from "@/schemas";
+import { loginFormSchema } from "@/schemas/forms/loginFormSchema";
 import { toast } from "sonner"
 import Link from "next/link";
 import { Progress } from "@/components/ui/progress"
 import { useState, useEffect } from "react";
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-  } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { CustomFormField } from "./CustomFormField";
+import LoadingProgressBar from "./LoadingProgressBar";
 
 export function LoginForm() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [progress, setProgress] = useState(0);
-
-    const loginFormSchema = userSchema.pick({ email: true, password: true });
+    const [progress, setProgress] = useState(0);    
 
     // Define form.
     const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -93,44 +85,16 @@ export function LoginForm() {
                     <p className="text-sm text-zinc-500">Insira os seus dados para entrar</p>
                 </div> 
 
-                {/* Barra de progresso */}
-                {isLoading && <Progress value={progress} className="w-full" />}
+                <LoadingProgressBar isLoading={isLoading} progress={progress} />
 
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>E-mail</FormLabel>
-                            <FormControl>
-                                <Input type="email" placeholder="fulano@email.com" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite seu e-mail
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Senha</FormLabel>
-                            <FormControl>
-                                <Input type="password" placeholder="********" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                Digite sua senha(min. 6 caracteres, max. 12)
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}                    
-                />
+                <CustomFormField control={form.control} name="email" label="E-mail" type="email" placeholder="fulano@email.com" description="Insira seu e-mail"/>
+
+                <CustomFormField control={form.control} name="password" label="Senha" type="password" placeholder="********" description="min. 6 caracteres, max. 12"/>
+
                 <Button type="submit" disabled={isLoading}>
                     {isLoading ? "Entrando..." : "Entrar"}
                 </Button>
+                
                 <div className="text-xs text-center">
                     <Link className="underline underline-offset-1" href="">Esqueci minha senha</Link>
                     <p>Não possui uma conta?&nbsp;
