@@ -14,3 +14,22 @@ export const cryptPass = async (unHashedPass: string) => {
 export const comparePass = async (unHashedPass?: string, hashedPass?: string) => {
   return await bcrypt.compare(unHashedPass, hashedPass);
 }
+
+export const fetchResponse = async (path: string, method: string, body?: any, options?: RequestInit ) => {
+  
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
+
+    const response: any = await fetch(url, {
+      method: method,
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    return response;
+
+
+  // const response = await fetch(url);
+  // return await response.json();
+}
