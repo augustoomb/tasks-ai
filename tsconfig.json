@@ -32,7 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/schemas/formSchemas"
+    "src/schemas/formSchemas",
+    "src/__tests__/components/HeaderForm.test.js",
+    "src/__tests__/components/LoginForm.test.tsx"
   ],
   "exclude": [
     "node_modules"
