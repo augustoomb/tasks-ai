@@ -17,7 +17,7 @@ const authorize = async (credentials: any) => {
     
     const passIsValid = await comparePass(password, userDb.password);
 
-    return passIsValid ? { id: String(userDb.id), email: userDb.email } : null;
+    return passIsValid ? { id: String(userDb.id), email: userDb.email, name: userDb.name } : null;
 
   } catch (error) {
     console.log("erro: "+error)
