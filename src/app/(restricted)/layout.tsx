@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/shared/AppSidebar";
+import { AppSidebar } from "@/components/sidebar/AppSidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
