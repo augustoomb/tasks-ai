@@ -57,7 +57,7 @@ describe("LoginForm Component", () => {
     const passwordInput = screen.getByPlaceholderText("********");
     const btnEntrar = screen.getByRole("button", { name: "Entrar" });
 
-    userEvent.type(emailInput, "augustobarbosa1988@gmail.com");
+    userEvent.type(emailInput, "fulano@email.com");
     userEvent.type(passwordInput, "123456");
     userEvent.click(btnEntrar);
 
