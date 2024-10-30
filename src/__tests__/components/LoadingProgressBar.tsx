@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import LoadingProgressBar from '@/components/LoadingProgressBar'
+import LoadingProgressBar from '@/components/forms/LoadingProgressBar'
  
 describe('Para o componente LoadingProgressBar, testa se: ', () => {
   

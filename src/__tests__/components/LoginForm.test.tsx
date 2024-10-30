@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/forms/LoginForm";
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
 

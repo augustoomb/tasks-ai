@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 // import Page from '../../app/page'
-import HeaderForm from '@/components/HeaderForm'
+import HeaderForm from '@/components/forms/HeaderForm'
  
 describe('Para o componente HeaderForm, testa se: ', () => {
   
