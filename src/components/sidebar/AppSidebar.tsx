@@ -1,5 +1,8 @@
-import { Calendar, Home, Inbox, Search, Settings, ChevronUp } from "lucide-react"
-
+import SignOut from "@/components/sidebar/SignOut";
+import LoggedUser from "./LoggedUser";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import { ChevronUp } from "lucide-react";
 import {
   Sidebar,
   SidebarHeader,
@@ -20,41 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import SignOut from "@/components/sidebar/SignOut";
-import LoggedUser from "./LoggedUser";
-import Image from "next/image";
-import { Separator } from "@/components/ui/separator"
-
-
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
+import SideBarMenuItems from "./SideBarMenuItems";
 
 export function AppSidebar() {
   return (
@@ -70,18 +39,9 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel>Grupo 1</SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem className="text-zinc-950 font-medium" key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url} className="py-5 my-0 hover:bg-zinc-950 hover:text-white">
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
+              
+              <SideBarMenuItems />  {/* custom  */}
+
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
@@ -91,7 +51,6 @@ export function AppSidebar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <SidebarMenuButton>
-                    {/* <User2 /> Username */}
                     <LoggedUser />
                     <ChevronUp className="ml-auto" />
                   </SidebarMenuButton>
@@ -100,12 +59,6 @@ export function AppSidebar() {
                   side="top"
                   className="w-[--radix-popper-anchor-width]"
                 >
-                  {/* <DropdownMenuItem>
-                    <span>Account</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Billing</span>
-                  </DropdownMenuItem> */}
                   <DropdownMenuItem>
                     <SignOut />
                   </DropdownMenuItem>
