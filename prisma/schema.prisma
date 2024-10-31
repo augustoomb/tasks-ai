@@ -8,11 +8,18 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  email     String      @unique
   password  String
   name      String
   phone     String?
-  status    Boolean  @default(true)
+  status    Boolean     @default(true)
+  Assistant Assistant[]
+}
+
+model Assistant {
+  id      String @id @default("0")
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId Int
 }
