@@ -37,7 +37,8 @@ export function LoginForm() {
         if (result.success) {
             setProgress(100);
             toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
-            router.push("/home");
+            // router.push("/home");
+            router.push("/initial");
         } else {
             toast.error(result.message);
             setProgress(0);
