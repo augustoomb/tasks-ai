@@ -1,4 +1,4 @@
-import SignOut from "@/components/sidebar/SignOut";
+import SignOut from "@/components/shared/SignOut";
 import LoggedUser from "./LoggedUser";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
