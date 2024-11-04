@@ -5,9 +5,11 @@ import Image from "next/image";
 import SignOut from "@/components/shared/SignOut";
 import { fetchResponse } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function WithoutAssistant({ userId }: { userId: string }) {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className="md:w-2/5 md:h-2/5 w-11/12 min-w-72 flex flex-col bg-white text-zinc-900 rounded-lg p-6">
@@ -23,24 +25,25 @@ export default function WithoutAssistant({ userId }: { userId: string }) {
                     Este é o seu primeiro uso do Tasks AI.
                     Por favor clique em continuar para criar seu assistente.
                 </p>   
-                <Button className="mt-4 w-2/3 self-center" onClick={() => onClick(userId, router)}>Cadastrar</Button>
+                <Button disabled={isLoading} className="mt-4 w-2/3 self-center" onClick={() => onClick(userId, router, setIsLoading)}>Cadastrar</Button>
             </div>
         </div>
     )
 }
 
-async function onClick(userId: string, router: any) {
+async function onClick(userId: string, router: any, setIsLoading: any) {
+
+    setIsLoading(true)    
 
     const response = await fetchResponse(`/assistant`, "POST", { userId: userId });
 
     if (response.ok) {
         const data = await response.json();
 
-        const idAssistant = data.id;
+        const assistantId = data.id;
 
-        router.push(`/${idAssistant}/home`);
+        router.push(`/${assistantId}/home`);
+    } else {
+        setIsLoading(false)
     }
-
-    
-
 }
