@@ -24,7 +24,12 @@ async function GetUserWithAssistants() {
     const user: any = data.user;
 
     if (user.Assistant && user.Assistant.length > 0) {
-        return <WithAssistant assistants={user.Assistant} />
+
+        const arrIds = user.Assistant.map((assistant: any) => {
+            return assistant.id
+        })
+
+        return <WithAssistant assistantsIds={arrIds} />
     } else {
         return <WithoutAssistant userId={user.id}/>
     }
