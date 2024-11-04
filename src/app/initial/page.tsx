@@ -8,13 +8,13 @@ export default async function InitialPage() {
     return (
         <div className="flex md:w-screen md:h-screen items-center justify-center">
             <Suspense fallback={<p>Carregando...</p>}> 
-                <GetAssistants />
+                <GetUserWithAssistants />
             </Suspense>                
         </div>
     )
 }
 
-async function GetAssistants() {
+async function GetUserWithAssistants() {
     const session = await getServerSession();
     const email = session?.user?.email || "";
     const response = await fetchResponse(`/user?email=${email}`, "GET");
