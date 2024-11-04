@@ -2,7 +2,7 @@ import SignOut from "@/components/shared/SignOut";
 import LoggedUser from "./LoggedUser";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, Bot } from "lucide-react";
 import {
   Sidebar,
   SidebarHeader,
@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import SideBarMenuItems from "./SideBarMenuItems";
+import Link from "next/link";
 
 export function AppSidebar() {
   return (
@@ -59,6 +60,9 @@ export function AppSidebar() {
                   side="top"
                   className="w-[--radix-popper-anchor-width]"
                 >
+                  <DropdownMenuItem>
+                    <Bot/><Link href="/initial">Voltar para Assistentes</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <SignOut />
                   </DropdownMenuItem>
