@@ -1,8 +1,10 @@
+
+
 import Image from "next/image";
 import { AssistantItem } from "./AssistantItem";
 import SignOut from "@/components/shared/SignOut";
 
-export default function WithAssistant({assistants}: any) {
+export default function WithAssistant({assistantsIds}: {assistantsIds: string[]}) {
     return (
         <div>
             <div className="flex flex-col justify-between w-full h-full p-4 border-solid border-2 border-zinc-200 shadow-lg rounded-lg">
@@ -16,8 +18,8 @@ export default function WithAssistant({assistants}: any) {
                 <div className="flex flex-col gap-y-6 ">
                     <p className="text-zinc-900 text-base text-center">Lista de Assistentes Cadastrados:</p>
                     <div className="flex flex-row flex-wrap gap-4 justify-center">
-                        <AssistantItem assistant={assistants[0]}/>
-                        <AssistantItem assistant={assistants[1] || {}}/>
+                        <AssistantItem assistantId={assistantsIds[0]}/>
+                        <AssistantItem assistantId={assistantsIds[1] || ""}/>
                     </div>  
                 </div>
             </div>
