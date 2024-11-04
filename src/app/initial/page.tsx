@@ -26,7 +26,7 @@ async function GetUserWithAssistants() {
     if (user.Assistant && user.Assistant.length > 0) {
         return <WithAssistant assistants={user.Assistant} />
     } else {
-        return <WithoutAssistant />
+        return <WithoutAssistant userId={user.id}/>
     }
     
 }
