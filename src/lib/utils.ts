@@ -27,10 +27,6 @@ export const fetchResponse = async (path: string, method: string, body?: any, op
       body: JSON.stringify(body),
     });
 
-    // const data = await response.json();
-
-    // return data;
-
     return response;
 
 }
