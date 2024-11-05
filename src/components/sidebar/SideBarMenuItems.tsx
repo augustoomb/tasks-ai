@@ -3,40 +3,42 @@
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar';
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Home, Inbox, Search, Settings, Package } from "lucide-react";
 import Link from 'next/link';
 
-// Menu items.
-const items = [
-    {
-      title: "Home",
-      url: "/home",
-      icon: Home,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
-    },
-  ]
 
 export default function SideBarMenuItems() {
     const pathname = usePathname();
+
+    const segment = pathname.split('/')[1];
+
+    const items = [
+      {
+        title: "Home",
+        url: `/${segment}/home`,
+        icon: Home,
+      },
+      {
+        title: "Módulos",
+        url: `/${segment}/modules`,
+        icon: Package,
+      },
+      {
+        title: "Calendar",
+        url: "#",
+        icon: Calendar,
+      },
+      {
+        title: "Search",
+        url: "#",
+        icon: Search,
+      },
+      {
+        title: "Settings",
+        url: "#",
+        icon: Settings,
+      },
+    ]
 
     return (
         <SidebarMenu>
