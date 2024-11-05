@@ -12,8 +12,8 @@ const createAssistant = async () => {
 
     const myAssistant = await openai.beta.assistants.create({
         instructions:
-          "You are a personal math tutor. When asked a question, write and run Python code to answer the question.",
-        name: "Assistente 003",
+          "Você é um assistant especializado em entender as necessidades do usuário, entender os parâmetros e passá-los corretamente para as functions definidas no 'tools'",
+        // name: "Assistente 003",
         // tools: [{ type: "code_interpreter" }],
         model: "gpt-4o-mini",
     });
