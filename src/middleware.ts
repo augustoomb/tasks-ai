@@ -1,18 +1,27 @@
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
+import { getCookie } from "@/lib/cookies";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const cookie = await getCookie("assistantId");
 
   const { pathname } = req.nextUrl;
   
+  // Permite acesso a /login e /register apenas quando o usuário não está autenticado
   if (!token && (pathname.startsWith("/login") || pathname.startsWith("/register"))) {
     return NextResponse.next();
   }
 
+  // Redireciona para /initial se o usuário autenticado tentar acessar /login ou /register
   if (token && (pathname.startsWith("/login") || pathname.startsWith("/register"))) {
-    const loginUrl = new URL("/home", req.url);
+    const loginUrl = new URL("/initial", req.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  if (!cookie && (pathname.startsWith("/panel"))) {
+    const loginUrl = new URL("/initial", req.url);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -23,7 +32,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // Se a sessão existir, continuar para a página requisitada
-  // return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
