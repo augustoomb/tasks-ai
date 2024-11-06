@@ -10,17 +10,15 @@ import Link from 'next/link';
 export default function SideBarMenuItems() {
     const pathname = usePathname();
 
-    const segment = pathname.split('/')[1];
-
     const items = [
       {
         title: "Home",
-        url: `/${segment}/home`,
+        url: `/panel/home`,
         icon: Home,
       },
       {
         title: "Módulos",
-        url: `/${segment}/modules`,
+        url: `/panel/modules`,
         icon: Package,
       },
       {
