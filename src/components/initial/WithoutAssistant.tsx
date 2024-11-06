@@ -6,6 +6,7 @@ import SignOut from "@/components/shared/SignOut";
 import { fetchResponse } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { setCookie } from "@/lib/cookies";
 
 export default function WithoutAssistant({ userId }: { userId: string }) {
     const router = useRouter();
@@ -42,7 +43,9 @@ async function onClick(userId: string, router: any, setIsLoading: any) {
 
         const assistantId = data.id;
 
-        router.push(`/${assistantId}/home`);
+        await setCookie("assistantId", assistantId);
+
+        router.push(`/panel/home`);
     } else {
         setIsLoading(false)
     }
