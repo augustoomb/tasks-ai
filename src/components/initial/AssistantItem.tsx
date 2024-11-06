@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { setCookie } from "@/lib/cookies";
 
 export function AssistantItem({assistantId}: {assistantId: string}) {
   const router = useRouter();
@@ -43,10 +44,15 @@ export function AssistantItem({assistantId}: {assistantId: string}) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" disabled={!assistantId} onClick={() => router.push(`/${assistantId}/home`)}>
+        <Button className="w-full" disabled={!assistantId} onClick={() => onClick(router, assistantId) }>
           <ArrowRight /> Entrar
         </Button>
       </CardFooter>
     </Card>
   )
+}
+
+async function onClick(router:any, assistantId: string) {
+  await setCookie("assistantId", assistantId);
+  router.push(`/panel/home`)
 }
