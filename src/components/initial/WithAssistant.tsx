@@ -14,7 +14,7 @@ export default function WithAssistant({assistantsIds}: {assistantsIds: string[]}
                         <SignOut />
                     </div>                    
                 </div>
-                <h2 className="text-zinc-900 text-2xl font-bold text-center">Seja bem vindo de volta</h2>
+                <h2 className="text-zinc-900 text-2xl font-bold text-center">Seja bem-vindo de volta</h2>
                 <div className="flex flex-col gap-y-6 ">
                     <p className="text-zinc-900 text-base text-center">Lista de Assistentes Cadastrados:</p>
                     <div className="flex flex-row flex-wrap gap-4 justify-center">

@@ -4,6 +4,8 @@ import { ArrowUp, ArrowRight, ArrowDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { setCookie } from "@/lib/cookies";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,10 +14,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { setCookie } from "@/lib/cookies";
+
 
 export function AssistantItem({assistantId}: {assistantId: string}) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = async () => {
+    setLoading(true);
+    try {
+      await setCookie("assistantId", assistantId);
+      router.push(`/panel/home`);
+    } catch (error) {
+      console.error("Erro ao definir cookie:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Card className={cn("w-[380px]")}>
@@ -44,15 +59,10 @@ export function AssistantItem({assistantId}: {assistantId: string}) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" disabled={!assistantId} onClick={() => onClick(router, assistantId) }>
-          <ArrowRight /> Entrar
+        <Button className="w-full" disabled={!assistantId || loading} onClick={handleClick}>
+          {loading ? "Carregando..." : <><ArrowRight /> Entrar</>}
         </Button>
       </CardFooter>
     </Card>
   )
-}
-
-async function onClick(router:any, assistantId: string) {
-  await setCookie("assistantId", assistantId);
-  router.push(`/panel/home`)
 }
