@@ -44,20 +44,20 @@ export function RegisterForm() {
                 router.refresh();
                 
             } else {
-                setProgress(0);
+                // setProgress(0);
                 const infoResponse = await response.json();
                 throw new Error((infoResponse.errors[0]?.message || JSON.stringify(infoResponse)));
             }
 
         } catch (error) {
-            setProgress(0);
+            // setProgress(0);
             toast.error(String(error));
             console.error(String(error));
         } finally {
-            setTimeout(() => {
+            // setTimeout(() => {
                 setIsLoading(false);
                 setProgress(0);
-            }, 1000);
+            // }, 1000);
         }  
     }
 
