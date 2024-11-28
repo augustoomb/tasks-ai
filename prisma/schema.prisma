@@ -16,10 +16,19 @@ model User {
   phone     String?
   status    Boolean     @default(true)
   Assistant Assistant[]
+  modules   Module[]
 }
 
 model Assistant {
   id      String @id @default("0")
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId Int
+}
+
+model Module {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String
+  status      Boolean
+  users       User[]
 }
