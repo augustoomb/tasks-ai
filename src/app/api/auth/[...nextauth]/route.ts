@@ -25,17 +25,71 @@ const authorize = async (credentials: any) => {
   }
 }
 
-const handler = NextAuth({
-  session: { strategy: "jwt" },
-  pages: { signIn: "/login" },  
+export const authOptions = {
+  pages: { signIn: "/login" },
+
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      if (token?.id) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
 
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: { email: {}, password: {} },
-      authorize
+      authorize,
     }),
   ],
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+
+
+// const handler = NextAuth({
+  
+//   // session: { strategy: "jwt" },
+//   pages: { signIn: "/login" },
+
+//   callbacks: {
+//     jwt({ token, user }) {
+//       if (user) { // User is available during sign-in
+//         console.log(token)
+//         // console.log(user)
+//         token.id = user.id
+//       }
+//       console.log(token)
+//       return token
+//     },
+//     async session({ session, token }) {
+//       // Incluindo o `id` na session a partir do token
+//       console.log("entrou no session!!")
+//       if (token?.id) {
+//         session.user.id = token.id;
+//       }
+//       return session;
+//     },
+//   },
+
+//   providers: [
+//     CredentialsProvider({
+//       name: "Credentials",
+//       credentials: { email: {}, password: {} },
+//       authorize
+//     }),
+//   ],
+// });
+
+// export { handler as GET, handler as POST };
