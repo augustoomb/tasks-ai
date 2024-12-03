@@ -3,6 +3,7 @@ import WithAssistant from "@/components/initial/WithAssistant";
 import WithoutAssistant from "@/components/initial/WithoutAssistant";
 import { fetchResponse } from "@/lib/utils";
 import { Suspense } from "react";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function InitialPage() {
     return (
@@ -15,10 +16,12 @@ export default async function InitialPage() {
 }
 
 async function GetUserWithAssistants() {
-    const session = await getServerSession();
-    const email = session?.user?.email || "";
-    const response = await fetchResponse(`/user?email=${email}`, "GET");
+    const session = await getServerSession(authOptions);
 
+    // const email = session?.user?.email || "";
+    const id = session?.user?.id || "";
+    const response = await fetchResponse(`/user?id=${id}`, "GET");
+    
     const data = await response.json();
 
     const user: any = data.user;
