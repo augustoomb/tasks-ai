@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
     try {
         const {searchParams} = new URL(req.url);
-        const email = searchParams.get("email") || "";
+        const id = Number(searchParams.get("id")) || 0;
 
         const userPrisma = await prisma.user.findUnique(
             { 
-                where: { email } ,
+                where: { id } ,
                 include: {
                     Assistant: true
                 }
