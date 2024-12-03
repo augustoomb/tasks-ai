@@ -1,14 +1,7 @@
 import { RegisterForm } from "@/components/forms/RegisterForm"
 import Image from "next/image";
-// import { getServerSession } from "next-auth";
-// import { redirect } from "next/navigation";
 
 export default function Register() {
-    // const session = await getServerSession();
-
-    // if (session) {
-    //     redirect("/home");
-    // }
 
     return(
         <main className="flex w-screen h-screen md:px-8 md:py-4 md:gap-x-8">
