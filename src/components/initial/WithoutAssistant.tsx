@@ -34,21 +34,27 @@ export default function WithoutAssistant({ userId }: { userId: string }) {
 
 async function onClick(userId: string, router: any, setIsLoading: any) {
 
-    setIsLoading(true)    
+    try {
+        setIsLoading(true)    
 
-    const response = await fetchResponse(`/assistant`, "POST", { userId: userId });
+        const response = await fetchResponse(`/assistant`, "POST", { userId: userId });
 
-    if (response.ok) {
-        console.log("Assistente criado com sucesso")
-        const data = await response.json();
+        if (response.ok) {
+            console.log("Assistente criado com sucesso")
+            const data = await response.json();
 
-        const assistantId = data.id;
+            const assistantId = data.id;
 
-        await setCookie("assistantId", assistantId);
+            await setCookie("assistantId", assistantId);
 
-        router.push(`/panel/home`);
-    } else {
-        setIsLoading(false)
-        console.log("error ao criar assistente")
+            router.push(`/panel/home`);
+        } else {
+            setIsLoading(false)
+            console.log("error ao criar assistente")
+        }
+    } catch (error) {
+        return (
+            <p>{JSON.stringify(error)}</p>
+        )
     }
 }

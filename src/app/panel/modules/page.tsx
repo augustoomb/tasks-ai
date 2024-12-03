@@ -24,20 +24,26 @@ export default async function Modules() {
 }
 
 async function GetModules() {
-    const session = await getServerSession(authOptions);
-    const userId = session?.user?.id || "";
+    try {
+        const session = await getServerSession(authOptions);
+        const userId = session?.user?.id || "";
 
-    const response = await fetchResponse("/module", "GET");
-    const data = await response.json();
-    const modules: Module[] = data.modules;
+        const response = await fetchResponse("/module", "GET");
+        const data = await response.json();
+        const modules: Module[] = data.modules;
 
-    return (
-        modules
-        .filter((module: Module) => module.status !== false)
-        .map((module: Module) => {
-            return (
-                <ItemModule key={module.id} module={module} userId={userId} />
-            )
-        })
-    )
+        return (
+            modules
+            .filter((module: Module) => module.status !== false)
+            .map((module: Module) => {
+                return (
+                    <ItemModule key={module.id} module={module} userId={userId} />
+                )
+            })
+        )
+    } catch (error) {
+        return (
+            <p>{JSON.stringify(error)}</p>
+        )
+    }    
 }

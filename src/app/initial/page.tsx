@@ -16,25 +16,30 @@ export default async function InitialPage() {
 }
 
 async function GetUserWithAssistants() {
-    const session = await getServerSession(authOptions);
+    try {
+        const session = await getServerSession(authOptions);
 
-    // const email = session?.user?.email || "";
-    const id = session?.user?.id || "";
-    const response = await fetchResponse(`/user?id=${id}`, "GET");
-    
-    const data = await response.json();
+        const id = session?.user?.id || "";
+        const response = await fetchResponse(`/user?id=${id}`, "GET");
+        
+        const data = await response.json();
 
-    const user: any = data.user;
+        const user: any = data.user;
 
-    if (user.Assistant && user.Assistant.length > 0) {
+        if (user.Assistant && user.Assistant.length > 0) {
 
-        const arrIds = user.Assistant.map((assistant: any) => {
-            return assistant.id
-        })
+            const arrIds = user.Assistant.map((assistant: any) => {
+                return assistant.id
+            })
 
-        return <WithAssistant assistantsIds={arrIds} />
-    } else {
-        return <WithoutAssistant userId={user.id}/>
+            return <WithAssistant assistantsIds={arrIds} />
+        } else {
+            return <WithoutAssistant userId={user.id}/>
+        }
+    } catch (error) {
+        return (
+            <p>{JSON.stringify(error)}</p>
+        )
     }
     
 }
