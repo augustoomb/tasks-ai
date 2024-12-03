@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import { AssistantItem } from "./AssistantItem";
 import SignOut from "@/components/shared/SignOut";

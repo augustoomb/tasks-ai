@@ -38,37 +38,18 @@ export function LoginForm() {
             if (result.success) {
                 setProgress(100);
                 toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
-                // router.push("/home");
+                
                 router.push("/initial");
             } else {
-                // setProgress(0);
                 throw new Error(result.message);
             }
             
         } catch (error) {
-            // setProgress(0);
             toast.error(String(error));
         } finally {
             setIsLoading(false);
             setProgress(0);
         }
-
-        // const result = await loginUser(values);
-
-        // if (result.success) {
-        //     setProgress(100);
-        //     toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
-        //     // router.push("/home");
-        //     router.push("/initial");
-        // } else {
-        //     toast.error(result.message);
-        //     setProgress(0);
-        // }
-
-        // setTimeout(() => {
-        //     setIsLoading(false);
-        //     setProgress(0);
-        // }, 1000);
     }
 
     // Atualiza o progresso gradualmente enquanto carrega

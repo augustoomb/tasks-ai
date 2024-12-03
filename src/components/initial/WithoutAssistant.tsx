@@ -39,6 +39,7 @@ async function onClick(userId: string, router: any, setIsLoading: any) {
     const response = await fetchResponse(`/assistant`, "POST", { userId: userId });
 
     if (response.ok) {
+        console.log("Assistente criado com sucesso")
         const data = await response.json();
 
         const assistantId = data.id;
@@ -48,5 +49,6 @@ async function onClick(userId: string, router: any, setIsLoading: any) {
         router.push(`/panel/home`);
     } else {
         setIsLoading(false)
+        console.log("error ao criar assistente")
     }
 }
