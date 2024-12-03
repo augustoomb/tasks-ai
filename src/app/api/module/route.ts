@@ -49,3 +49,17 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: JSON.stringify(e) }, { status: 500 });
     }
 }
+
+export async function GET(req: Request) {
+    try {
+        const modules = await prisma.module.findMany({
+            include: {
+                users: true
+            }
+        });
+        return NextResponse.json({ modules }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: JSON.stringify(error) }, { status: 500 });
+    }
+}
+
