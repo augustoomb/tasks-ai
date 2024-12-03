@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  email     String      @unique
+  id        Int             @id @default(autoincrement())
+  createdAt DateTime        @default(now())
+  email     String          @unique
   password  String
   name      String
   phone     String?
-  status    Boolean     @default(true)
+  status    Boolean         @default(true)
   Assistant Assistant[]
-  modules   Module[]
+  modules   Users_Modules[]
 }
 
 model Assistant {
@@ -26,9 +26,19 @@ model Assistant {
 }
 
 model Module {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
+  id          Int             @id @default(autoincrement())
+  name        String          @unique
   description String
   status      Boolean
-  users       User[]
+  users       Users_Modules[]
+}
+
+model Users_Modules {
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int
+  module   Module  @relation(fields: [moduleId], references: [id])
+  moduleId Int
+  enabled  Boolean
+
+  @@id([userId, moduleId])
 }
