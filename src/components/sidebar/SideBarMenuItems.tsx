@@ -32,8 +32,8 @@ export default function SideBarMenuItems() {
         icon: Search,
       },
       {
-        title: "Settings",
-        url: "#",
+        title: "Configurações",
+        url: "/panel/settings",
         icon: Settings,
       },
     ]
