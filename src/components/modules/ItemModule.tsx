@@ -31,14 +31,16 @@ export default function ItemModule(props: ItemModuleProps) {
 
     const [isChecked, setChecked] = useState(false)
 
-    const handleClick = async () => {
+    const toogleSwitch = async () => {
+        const response = await fetchResponse(`/users_modules/${module.id}?userId=${userId}`, "PUT", { enabled: !isChecked });
+        setChecked(!isChecked)
     }
 
     useEffect(() => {
         const getInfo = async () => {
             const response = await fetchResponse(`/module/${module.id}?userId=${userId}`, "GET");
             const data = await response.json();
-            data.modules == null ? setChecked(false) : setChecked(true);
+            data.modules?.users[0]?.enabled == true ? setChecked(true) : setChecked(false);
         }
 
         getInfo()
@@ -46,7 +48,7 @@ export default function ItemModule(props: ItemModuleProps) {
 
     return (
         <Dialog key={module.id}>
-            <DialogTrigger onClick={handleClick}>
+            <DialogTrigger>
                 <Card className="flex justify-between bg-zinc-900 text-white w-96">
                     <CardHeader>
                         <CardTitle>{module.name}</CardTitle>
@@ -58,7 +60,7 @@ export default function ItemModule(props: ItemModuleProps) {
                 <DialogHeader>
                 <DialogTitle>Módulo está habilitado para este usuário?</DialogTitle>
                 <DialogDescription>
-                    <Switch checked={isChecked}/>
+                    <Switch checked={isChecked} onCheckedChange={toogleSwitch} />
                 </DialogDescription>
                 </DialogHeader>
             </DialogContent>
