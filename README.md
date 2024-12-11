@@ -1,3 +1,8 @@
+![](https://github.com/augustoomb/tasks-ai/blob/main/prints/Captura%20de%20tela%20de%202024-12-11%2009-19-19.png?raw=true)
+![](https://github.com/augustoomb/tasks-ai/blob/main/prints/Captura%20de%20tela%20de%202024-12-11%2009-19-32.png?raw=true)
+![](https://github.com/augustoomb/tasks-ai/blob/main/prints/Captura%20de%20tela%20de%202024-12-11%2009-20-34.png?raw=true)
+![](https://github.com/augustoomb/tasks-ai/blob/main/prints/Captura%20de%20tela%20de%202024-12-11%2009-22-10.png?raw=true)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
