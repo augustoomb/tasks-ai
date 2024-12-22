@@ -22,8 +22,8 @@ export default function SideBarMenuItems() {
         icon: Package,
       },
       {
-        title: "Calendar",
-        url: "#",
+        title: "Chat",
+        url: "/panel/chat",
         icon: Calendar,
       },
       {
