@@ -51,7 +51,7 @@ export default function ItemModule(props: ItemModuleProps) {
             <DialogTrigger>
                 <Card className="flex justify-between bg-zinc-900 text-white w-96">
                     <CardHeader>
-                        <CardTitle>{module.name}</CardTitle>
+                        <CardTitle>ID: {module.id} <br />Nome: {module.name}</CardTitle>
                         <CardDescription className="text-justify">{module.description}</CardDescription>
                     </CardHeader>
                 </Card>
