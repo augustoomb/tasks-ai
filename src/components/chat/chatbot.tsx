@@ -5,8 +5,13 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import clsx from 'clsx';
 
-export default function Chatbot() {
-    const { messages, input, handleInputChange, handleSubmit } = useChat({});
+export default function Chatbot({ arrUserEnabledModuleIds }: { arrUserEnabledModuleIds: number[] }) {
+
+    // const arrModules = [1, 2, 3, 4, 5];
+
+    const { messages, input, handleInputChange, handleSubmit } = useChat({
+        body: { arrUserEnabledModuleIds }, // Adiciona o array de números ao corpo da requisição
+    });
 
     return (
         <div className='flex flex-col h-full my-2 rounded-lg '>

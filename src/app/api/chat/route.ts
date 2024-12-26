@@ -7,9 +7,9 @@ import { z } from 'zod';
 // Allow streaming responses up to 30 seconds
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, arrUserEnabledModuleIds } = await req.json();
 
-  // console.log('Mensagens recebidas:', messages);
+  console.log("arrUserEnabledModuleIds: "+arrUserEnabledModuleIds);
 
   const result = streamText({
     model: openai('gpt-4o-mini'),
