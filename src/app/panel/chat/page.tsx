@@ -50,15 +50,6 @@ async function GetModules() {
             <Chatbot arrUserEnabledModuleIds={arrUserEnabledModuleIds} />
         )
 
-        // return (
-        //     modules
-        //     .filter((module: Module) => module.status !== false)
-        //     .map((module: Module) => {
-        //         return (
-        //             <ItemModule key={module.id} module={module} userId={userId} />
-        //         )
-        //     })
-        // )
     } catch (error) {
         console.log(JSON.stringify(error));
         return (
@@ -66,6 +57,3 @@ async function GetModules() {
         )
     }    
 }
-
-// CHAMAR NA API PARA PEGAR QUAIS MÓDULOS ESTÃO ATIVOS. 
-// PASSAR PARA O COMPONENTE CHATBOT
