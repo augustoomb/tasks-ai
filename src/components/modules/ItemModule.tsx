@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Module } from "@prisma/client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     Dialog,
     DialogContent,
@@ -26,6 +27,8 @@ interface ItemModuleProps {
 
 export default function ItemModule(props: ItemModuleProps) {
     
+    const router = useRouter();
+
     const { module } = props
     const { userId } = props
 
@@ -34,6 +37,7 @@ export default function ItemModule(props: ItemModuleProps) {
     const toogleSwitch = async () => {
         const response = await fetchResponse(`/users_modules/${module.id}?userId=${userId}`, "PUT", { enabled: !isChecked });
         setChecked(!isChecked)
+        router.refresh();
     }
 
     useEffect(() => {
