@@ -27,11 +27,6 @@ export default function SideBarMenuItems() {
         icon: Calendar,
       },
       {
-        title: "Search",
-        url: "#",
-        icon: Search,
-      },
-      {
         title: "Configurações",
         url: "/panel/settings",
         icon: Settings,

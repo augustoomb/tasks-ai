@@ -38,11 +38,9 @@ export function AppSidebar() {
         <Separator className="self-center w-10/12 bg-zinc-200"/>
         <SidebarContent className="border-solid border-x-2 border-zinc-100">
           <SidebarGroup>
-            <SidebarGroupLabel>Grupo 1</SidebarGroupLabel>
-            <SidebarGroupContent>
-              
+            {/* <SidebarGroupLabel>Grupo 1</SidebarGroupLabel> */}
+            <SidebarGroupContent>              
               <SideBarMenuItems />  {/* custom  */}
-
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
