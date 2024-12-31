@@ -2,7 +2,6 @@
 
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
-import { deleteCookie } from "@/lib/cookies";
 import { useState } from "react";
 
 export default function SignOut() {
@@ -19,7 +18,6 @@ async function handleClick(setLoading: any) {
     setLoading(true);
 
     try {
-        await deleteCookie("assistantId")
         await signOut({ callbackUrl: "/login" })
     } catch (error) {
         console.error("Erro ao efetuar logout:", error);

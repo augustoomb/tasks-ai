@@ -1,8 +1,5 @@
-import { ZodIssue } from 'zod';
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { moduleSchema } from "@/schemas/moduleSchema";
 
 export async function POST(req: Request) {
 }

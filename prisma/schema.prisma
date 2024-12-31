@@ -15,14 +15,7 @@ model User {
   name      String
   phone     String?
   status    Boolean         @default(true)
-  Assistant Assistant[]
   modules   Users_Modules[]
-}
-
-model Assistant {
-  id      String @id @default("0")
-  owner   User   @relation(fields: [ownerId], references: [id])
-  ownerId Int
 }
 
 model Module {

@@ -39,7 +39,8 @@ export function LoginForm() {
                 setProgress(100);
                 toast.success("Login efetuado com sucesso. Redirecionando para a página principal.");
                 
-                router.push("/initial");
+                // router.push("/initial");
+                router.push("/panel/home");
             } else {
                 throw new Error(result.message);
             }

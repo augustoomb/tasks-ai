@@ -7,10 +7,6 @@ import clsx from 'clsx';
 
 export default function Chatbot({ arrUserEnabledModuleIds }: { arrUserEnabledModuleIds: number[] }) {
 
-    // const arrModules = [1, 2, 3, 4, 5];
-
-    console.log("Montou o chatbot");
-
     const { messages, input, handleInputChange, handleSubmit } = useChat({
         body: { arrUserEnabledModuleIds }, // Adiciona o array de números ao corpo da requisição
     });

@@ -29,7 +29,4 @@ export const fetchResponse = async (path: string, method: string, body?: any, op
     });
 
     return response;
-
 }
-
-

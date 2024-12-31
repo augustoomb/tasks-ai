@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -9,10 +8,7 @@ export async function GET(req: Request) {
 
         const userPrisma = await prisma.user.findUnique(
             { 
-                where: { id } ,
-                include: {
-                    Assistant: true
-                }
+                where: { id },
             },
             
         );

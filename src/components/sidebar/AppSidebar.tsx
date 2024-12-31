@@ -61,9 +61,6 @@ export function AppSidebar() {
                   className="w-[--radix-popper-anchor-width]"
                 >
                   <DropdownMenuItem>
-                    <Bot/><Link href="/initial">Voltar para Assistentes</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
                     <SignOut />
                   </DropdownMenuItem>
                 </DropdownMenuContent>

@@ -1,12 +1,12 @@
 import BreadCrumb from "@/components/shared/Breadcrumb";
-import { getCookie } from "@/lib/cookies";
-import { fetchResponse } from "@/lib/utils";
+// import { getCookie } from "@/lib/cookies";
+// import { fetchResponse } from "@/lib/utils";
 
 
 export default async function Home() {
   
-    const assistantId = await getCookie("assistantId");
-    console.log("Deu certo o cookie: "+assistantId);
+    // const assistantId = await getCookie("assistantId");
+    // console.log("Deu certo o cookie: "+assistantId);
 
 
 

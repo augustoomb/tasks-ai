@@ -2,7 +2,6 @@ import BreadCrumb from "@/components/shared/Breadcrumb";
 import Chatbot from "@/components/chat/chatbot";
 import { getServerSession } from "next-auth";
 import { fetchResponse } from "@/lib/utils";
-import { Module } from "@prisma/client";
 import { Suspense } from "react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
