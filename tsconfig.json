@@ -34,7 +34,8 @@
     ".next/types/**/*.ts",
     "src/schemas/formSchemas",
     "src/__tests__/components/HeaderForm.test.js",
-    "src/__tests__/components/LoginForm.test.tsx"
+    "src/__tests__/components/LoginForm.test.tsx",
+    "src/lib/emailSender.js"
   ],
   "exclude": [
     "node_modules"
