@@ -30,6 +30,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "google-auth-library": "^9.14.2",
     "googleapis": "^144.0.0",
     "lucide-react": "^0.453.0",

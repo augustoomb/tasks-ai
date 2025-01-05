@@ -2,6 +2,8 @@ import { tool } from 'ai';
 import { z } from 'zod';
 // const sgMail = require('@sendgrid/mail')
 import sgMail from '@sendgrid/mail'
+import dotenv from 'dotenv';
+dotenv.config();
 
 const sendEmail = async(to, value) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY)
