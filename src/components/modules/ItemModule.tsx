@@ -52,11 +52,12 @@ export default function ItemModule(props: ItemModuleProps) {
 
     return (
         <Dialog key={module.id}>
-            <DialogTrigger>
-                <Card className="flex justify-between bg-zinc-900 text-white w-96">
-                    <CardHeader>
-                        <CardTitle>ID: {module.id} <br />Nome: {module.name}</CardTitle>
-                        <CardDescription className="text-justify">{module.description}</CardDescription>
+            <DialogTrigger className="w-full xl:w-1/2 ">
+                <Card className="flex min-h-44 justify-between bg-zinc-900 max-w-2xl text-white p-4">
+                    <CardHeader className="self-center">
+                        <CardTitle className="inline-block w-fit bg-gray-600 text-xs rounded-xl px-2 py-1">Disponível</CardTitle>
+                        <CardTitle className="font-semibold text-3xl text-left">{module.name}</CardTitle>
+                        <CardDescription className="text-justify text-white text-sm">{module.description}</CardDescription>
                     </CardHeader>
                 </Card>
             </DialogTrigger>
