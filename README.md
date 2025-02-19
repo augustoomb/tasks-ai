@@ -1,3 +1,7 @@
+![print-login](prints/print-login.png)
+![print-config](prints/print-config.png)
+![print-register](prints/print-register.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
