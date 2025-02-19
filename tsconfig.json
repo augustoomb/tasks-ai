@@ -36,7 +36,8 @@
     "src/__tests__/components/HeaderForm.test.js",
     "src/__tests__/components/LoginForm.test.tsx",
     "src/lib/emailSender.js",
-    "src/lib/sheets_copy.js"
+    "src/lib/sheets_copy.js",
+    "src/lib/sheets2.js"
   ],
   "exclude": [
     "node_modules"

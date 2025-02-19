@@ -1,6 +1,6 @@
 import { google } from "googleapis";
 import { tool } from 'ai';
-import { z } from 'zod';
+import { set, z } from 'zod';
 
 const clientEmail = process.env.CLIENT_EMAIL;
 const privateKey = process.env.PRIVATE_KEY || "";
@@ -12,8 +12,36 @@ const googleAuth = new google.auth.JWT(
     'https://www.googleapis.com/auth/spreadsheets'
 );
 
-export const getCellValueInGoogleSheet = async () => {
+export const setValuesInGoogleSheet = async (param: any) => {
+    console.log("Entrou no setValuesInGoogleSheet. Dados:");
 
+    const { values } = param
+    console.log(values);
+    const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
+    const response = await googleSheets.spreadsheets.values.update({
+        auth: googleAuth,
+        spreadsheetId: "1jDaG0n_kT8br1e4qs6-HfkwK1GloHX6AU9pHmKq2gMQ",
+        range: `sheet1!A1`, // O intervalo de células onde você quer começar a inserir os dados
+        valueInputOption: "RAW", // Insere os valores sem formatação especial
+        requestBody: {
+            values: values, // Aqui você passa o array com as linhas e dados
+        },
+    });
+
+    return response;
+}
+
+export const setDataInGoogleSheets = tool({
+    description: 'insere os dados fornecidos na planilha',
+    parameters: z.object({
+        values: z.array(z.array(z.string()))
+    }),
+    execute: async (values) => setValuesInGoogleSheet(values)
+})
+
+
+export const getCellValueInGoogleSheet = async () => {
+    console.log("Entrou no getCellValueInGoogleSheet");
     const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
     const response = await googleSheets.spreadsheets.values.get({
         auth: googleAuth,
@@ -46,49 +74,3 @@ export const getSpecificCellDataFromGoogleSheets = tool({
     parameters: z.object({}),
     execute: async () => getCellValueInGoogleSheet()
 })
-
-
-
-
-
-// // 'use server'
-
-// import { google } from "googleapis";
-// import { tool } from 'ai';
-// import { z } from 'zod';
-
-// const clientEmail = process.env.CLIENT_EMAIL;
-// const privateKey = process.env.PRIVATE_KEY || "";
-
-// const googleAuth = new google.auth.JWT(
-//     clientEmail,
-//     undefined,
-//     privateKey.replace(/\\n/g, '\n'),
-//     'https://www.googleapis.com/auth/spreadsheets'
-// );
-
-// export const getCellValueInGoogleSheet = async (requestedCell: any) => {
-
-//     const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
-//     const response = await googleSheets.spreadsheets.values.get({
-//         auth: googleAuth,
-//         spreadsheetId: "1jDaG0n_kT8br1e4qs6-HfkwK1GloHX6AU9pHmKq2gMQ",
-//         range: `sheet1!${requestedCell}`,
-//     });
-
-//     const flattenedData = response.data.values ? 
-//         response.data.values.map(row => Number(row[0])) : 
-//         [];
-    
-//     return flattenedData.join(", ");
-// }
-
-// getCellValueInGoogleSheet('A4');
-
-// export const getSpecificCellDataFromGoogleSheets = tool({
-//     description: 'o usuário informará uma célula de planilha (ex: A4) e você fornecerá o conteúdo dessa célula',
-//     parameters: z.object({
-//       requestedCell: z.string().describe('Celula inicial'),
-//     }),
-//     execute: async ({ requestedCell }) => getCellValueInGoogleSheet(requestedCell)
-// })

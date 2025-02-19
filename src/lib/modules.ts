@@ -1,12 +1,16 @@
 import { sendEmailTools } from "./emailSender";
-import { getSpecificCellDataFromGoogleSheets } from "./sheets";
+import { getSpecificCellDataFromGoogleSheets, setDataInGoogleSheets } from "./sheets";
 
 export const runModules = (arrUserEnabledModuleIds: number[]) => {
   
     const toolMap: { [key: number]: any } = {
-      2: {
+      1: {
         name: "getSpecificCellDataFromGoogleSheets",
         implementation: getSpecificCellDataFromGoogleSheets,
+      },
+      2: {
+        name: "setDataInGoogleSheets",
+        implementation: setDataInGoogleSheets,
       },
       3: {
         name: "sendEmailTools",
