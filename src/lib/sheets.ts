@@ -13,18 +13,19 @@ const googleAuth = new google.auth.JWT(
 );
 
 export const setValuesInGoogleSheet = async (param: any) => {
+
     console.log("Entrou no setValuesInGoogleSheet. Dados:");
 
-    const { values } = param
-    console.log(values);
+    const { values } = param //values é uma matriz (desconstruida do objeto param)
+    // console.log(values);
     const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
     const response = await googleSheets.spreadsheets.values.update({
         auth: googleAuth,
         spreadsheetId: "1jDaG0n_kT8br1e4qs6-HfkwK1GloHX6AU9pHmKq2gMQ",
-        range: `sheet1!A1`, // O intervalo de células onde você quer começar a inserir os dados
+        range: `sheet1!A2`,
         valueInputOption: "RAW", // Insere os valores sem formatação especial
         requestBody: {
-            values: values, // Aqui você passa o array com as linhas e dados
+            values: values, // Aqui passo o array com as linhas e dados
         },
     });
 
@@ -33,40 +34,45 @@ export const setValuesInGoogleSheet = async (param: any) => {
 
 export const setDataInGoogleSheets = tool({
     description: 'insere os dados fornecidos na planilha',
-    parameters: z.object({
-        values: z.array(z.array(z.string()))
-    }),
+        parameters: z.object({
+            values: z.any()
+        }),
     execute: async (values) => setValuesInGoogleSheet(values)
 })
 
 
 export const getCellValueInGoogleSheet = async () => {
-    console.log("Entrou no getCellValueInGoogleSheet");
-    const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
-    const response = await googleSheets.spreadsheets.values.get({
-        auth: googleAuth,
-        spreadsheetId: "1jDaG0n_kT8br1e4qs6-HfkwK1GloHX6AU9pHmKq2gMQ",
-        range: `sheet1`,
-    });
+    try {
+        console.log("Entrou no getCellValueInGoogleSheet");
+        const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
+        const response = await googleSheets.spreadsheets.values.get({
+            auth: googleAuth,
+            spreadsheetId: "1y95m64Mulm9X5B8fdv_SLVDKebfEzAQu2lKHRVBDvc4",
+            range: `sheet1`,
+        });
 
-    const rows = response.data.values;
-    if (!rows || rows.length === 0) {
-        console.log("Nenhum dado encontrado.");
-        return;
+        const rows = response.data.values;
+        if (!rows || rows.length === 0) {
+            console.log("Nenhum dado encontrado.");
+            return;
+        }
+
+        // Extraindo cabeçalho
+        const headers = rows[0];
+
+        // Convertendo para array de objetos
+        const result = rows.slice(1).map((row) => { // remover primeira linha, já que é o cabeçalho
+            return headers.reduce((acc, header, index) => {
+            acc[header] = row[index] || ""; // Evita `undefined`
+            return acc;
+            }, {});
+        });
+
+        return result;
+    } catch (error) {
+        console.log(error);
+        return { error: "erro ao buscar dados na planilha!" };
     }
-
-    // Extraindo cabeçalho
-    const headers = rows[0];
-
-    // Convertendo para array de objetos
-    const result = rows.slice(1).map((row) => { // remover primeira linha, já que é o cabeçalho
-        return headers.reduce((acc, header, index) => {
-        acc[header] = row[index] || ""; // Evita `undefined`
-        return acc;
-        }, {});
-    });
-
-    return result;
 }
 
 export const getSpecificCellDataFromGoogleSheets = tool({
