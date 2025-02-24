@@ -8,6 +8,13 @@ import ItemModule from "@/components/modules/ItemModule";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 export default async function Settings() {
       
@@ -27,8 +34,23 @@ export default async function Settings() {
                 <div className="flex flex-col gap-y-4">
                     <h3 className="text-xl font-bold">Open AI</h3>
                     <div className="grid w-full max-w-sm items-center gap-y-2">
+                        <Label htmlFor="model">Modelos</Label>
+                        <Select>
+                            <SelectTrigger id="model">
+                                <SelectValue placeholder="Modelos" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-y-2">
                         <Label htmlFor="key">Key</Label>
                         <Input type="text" id="key" placeholder="Key" />
+                    </div>
+                    <div className="grid w-full max-w-sm items-center gap-y-2">
+                        <Label htmlFor="project_id">Project ID</Label>
+                        <Input type="text" id="project_id" placeholder="Project ID" />
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-4">
@@ -40,6 +62,13 @@ export default async function Settings() {
                     <div className="grid w-full max-w-sm items-center gap-y-2">
                         <Label htmlFor="private-key">Private key</Label>
                         <Input type="text" id="private-key" placeholder="Private key" />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-y-4">
+                    <h3 className="text-xl font-bold">Send Grid (e-mails)</h3>
+                    <div className="grid w-full max-w-sm items-center gap-y-2">
+                        <Label htmlFor="api_key">API Key</Label>
+                        <Input type="text" id="api_key" placeholder="API Key" />
                     </div>
                 </div>
                 <div className="w-full max-w-sm flex flex-row place-content-between">
