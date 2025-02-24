@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id        Int             @id @default(autoincrement())
-  createdAt DateTime        @default(now())
-  email     String          @unique
-  password  String
-  name      String
-  phone     String?
-  status    Boolean         @default(true)
-  modules   Users_Modules[]
+  id          Int             @id @default(autoincrement())
+  createdAt   DateTime        @default(now())
+  email       String          @unique
+  password    String
+  name        String
+  phone       String?
+  status      Boolean         @default(true)
+  modules     Users_Modules[]
+  credentials Credential[]
 }
 
 model Module {
@@ -27,11 +28,22 @@ model Module {
 }
 
 model Users_Modules {
-  user     User    @relation(fields: [userId], references: [id])
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId   Int
-  module   Module  @relation(fields: [moduleId], references: [id])
+  module   Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   moduleId Int
   enabled  Boolean
 
   @@id([userId, moduleId])
+}
+
+model Credential {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  keyName      String // Ex: "api_key", "client_email"
+  encryptedKey String // Chave criptografada
+  createdAt    DateTime @default(now())
+
+  @@unique([userId, keyName]) // Garante que um usuário não tenha credenciais duplicadas para o mesmo serviço
 }
