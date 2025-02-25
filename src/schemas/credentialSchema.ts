@@ -8,7 +8,7 @@ export const credentialSchema = z.object({
     keyName: z
         .string({ invalid_type_error: "keyName deve ser válido" }),
 
-    encryptedKey: z
+    apiKey: z
         .string({
             required_error: "Senha é obrigatória",
             invalid_type_error: "Senha deve ser um campo de texto",

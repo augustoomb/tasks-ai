@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { credentialSchema } from "@/schemas/credentialSchema";
 import { NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
+import { cryptPass } from '@/lib/utils';
 
 export async function POST(req: Request, res: NextApiResponse) {
     try {
@@ -16,7 +17,9 @@ export async function POST(req: Request, res: NextApiResponse) {
             }, { status: 400 });
         }
 
-        const { userId, keyName, encryptedKey } = validatedCredential.data;
+        const { userId, keyName, apiKey } = validatedCredential.data;
+
+        const encryptedKey = await cryptPass(apiKey);
 
         await prisma.credential.upsert({
             where: {                
@@ -32,10 +35,7 @@ export async function POST(req: Request, res: NextApiResponse) {
             }
         });
 
-
-
-
-        return NextResponse.json({ message: 'Credencial criada com sucesso' });
+        return NextResponse.json({ message: 'Credencial atualizada com sucesso' }, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
