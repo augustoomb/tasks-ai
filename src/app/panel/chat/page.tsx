@@ -46,7 +46,7 @@ async function GetModules() {
             .map((module: any) => module.id)
 
         return (
-            <Chatbot arrUserEnabledModuleIds={arrUserEnabledModuleIds} />
+            <Chatbot arrUserEnabledModuleIds={arrUserEnabledModuleIds} userId={ userId } />
         )
 
     } catch (error) {

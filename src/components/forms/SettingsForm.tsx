@@ -71,8 +71,8 @@ export function SettingsForm(props: {userId: string}) {
                     </Select>
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-y-2">
-                    <Label htmlFor="openai_key">Key</Label>
-                    <Input type="text" id="openai_key" placeholder="Key" onBlur={(e) => e.target.value.trim() ? inputHandleBlur(e.target) : null} />
+                    <Label htmlFor="openai_api_key">Key</Label>
+                    <Input type="text" id="openai_api_key" placeholder="Key" onBlur={(e) => e.target.value.trim() ? inputHandleBlur(e.target) : null} />
                 </div>
                 <div className="grid w-full max-w-sm items-center gap-y-2">
                     <Label htmlFor="openai_project_id">Project ID</Label>

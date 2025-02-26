@@ -25,6 +25,7 @@ model Module {
   description String
   status      Boolean
   users       Users_Modules[]
+  // credentials Credential[]
 }
 
 model Users_Modules {
@@ -41,8 +42,10 @@ model Credential {
   id           Int      @id @default(autoincrement())
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
+  // module       Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  // moduleId     Int
   keyName      String // Ex: "api_key", "client_email"
-  encryptedKey String // Chave criptografada
+  encryptedKey String   @db.Text // Chave criptografada
   createdAt    DateTime @default(now())
 
   @@unique([userId, keyName]) // Garante que um usuário não tenha credenciais duplicadas para o mesmo serviço

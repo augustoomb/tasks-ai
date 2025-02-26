@@ -5,10 +5,17 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import clsx from 'clsx';
 
-export default function Chatbot({ arrUserEnabledModuleIds }: { arrUserEnabledModuleIds: number[] }) {
+interface ChatbotProps {
+    arrUserEnabledModuleIds: number[];
+    userId: string;
+}
+
+// export default function Chatbot({ arrUserEnabledModuleIds }: { arrUserEnabledModuleIds: number[] }) {
+export default function Chatbot(props: ChatbotProps) {
+    const { arrUserEnabledModuleIds, userId } = props;
 
     const { messages, input, handleInputChange, handleSubmit } = useChat({
-        body: { arrUserEnabledModuleIds }, // Adiciona o array de números ao corpo da requisição
+        body: { arrUserEnabledModuleIds, userId }, // Adiciona o array de números ao corpo da requisição
     });
 
     return (

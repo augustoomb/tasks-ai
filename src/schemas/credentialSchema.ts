@@ -10,7 +10,11 @@ export const credentialSchema = z.object({
 
     apiKey: z
         .string({
-            required_error: "Senha é obrigatória",
-            invalid_type_error: "Senha deve ser um campo de texto",
-        })
+            required_error: "apiKey é obrigatória",
+            invalid_type_error: "apiKey deve ser um campo de texto",
+        }),
+    // moduleId: z.number().int({
+    //     message: 'O moduleId deve ser um número inteiro',
+    // }),
+    
 });
