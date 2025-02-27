@@ -3,7 +3,7 @@ import { openai } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { createOpenAI } from "@ai-sdk/openai";
 import prisma from "@/lib/prisma";
-// import { decryptKey } from '@/lib/utils';
+import { decryptCredentials } from '@/lib/utils';
 
 
 const getCredentialsByUserId = async (userId: string) => {
@@ -24,13 +24,17 @@ export async function POST(req: Request) {
     (credential) => credential.keyName === "openai_api_key"
   );
 
+  const decryptOpenAIKey = decryptCredentials(openaiApiKeyCredential?.encryptedKey || '');
+
+  // console.log("KEY DESCRIPTOGRAFADA: "+decryptOpenAIKey);
+
   // const key = decryptKey(openaiApiKeyCredential?.encryptedKey || '');
   // console.log("KEY DESCRIPTOGRAFADA: "+key);
 
   // console.log(openaiApiKeyCredential?.encryptedKey);
 
   // ver essa linha
-  const openai = createOpenAI({ apiKey: openaiApiKeyCredential?.encryptedKey });
+  const openai = createOpenAI({ apiKey: decryptOpenAIKey });
 
   const result = streamText({
     model: openai('gpt-4o-mini'), //ver essa linha

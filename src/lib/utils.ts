@@ -1,29 +1,49 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 var bcrypt = require('bcryptjs');
 
 
 // CRYPTO - CREDENTIALS
-const iv = crypto.randomBytes(16); // Vetor de Inicialização
-const key = crypto.randomBytes(32);
+const SECRET_KEY = process.env.CRYPTO_SECRET_KEY || 'sua-chave-secreta-de-32-caracteres-aqui';
+const SECRET_IV = process.env.CRYPTO_SECRET_IV || 'seu-iv-de-16-car';
 
-// CRYPTO - CREDENTIALS
-export const cryptCredentials = async (text: string) => {
-  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
-  let encrypted = cipher.update(text);
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-  return encrypted.toString('hex');
-}
+// Função para converter string em buffer de tamanho fixo
+const getKeyBuffer = (key: string, length: number): Buffer => {
+  return Buffer.from(key.padEnd(length, '0').slice(0, length));
+};
 
-// CRYPTO - CREDENTIALS
-// export const decryptKey = (encryptedText: string) => {
-//   const [ivHex, encrypted] = encryptedText.split(':');
-//   const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(secretKey, 'utf-8'), Buffer.from(ivHex, 'hex'));
-//   let decrypted = decipher.update(encrypted, 'hex', 'utf-8');
-//   decrypted += decipher.final('utf-8');
-//   return decrypted;
-// };
+// CRYPTO - CREDENCIAIS
+export const encryptCredentials = (text: string): string => {
+  try {
+    const key = getKeyBuffer(SECRET_KEY, 32);
+    const iv = getKeyBuffer(SECRET_IV, 16);
+    
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+  } catch (error) {
+    console.error('Erro na criptografia:', error);
+    throw new Error('Falha ao criptografar dados');
+  }
+};
+
+// CRYPTO - CREDENCIAIS
+export const decryptCredentials = (encryptedText: string): string => {
+  try {
+    const key = getKeyBuffer(SECRET_KEY, 32);
+    const iv = getKeyBuffer(SECRET_IV, 16);
+    
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (error) {
+    console.error('Erro na descriptografia:', error);
+    throw new Error('Falha ao descriptografar dados');
+  }
+};
 
 
 // SHADCN UI

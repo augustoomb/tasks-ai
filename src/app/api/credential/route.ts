@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { credentialSchema } from "@/schemas/credentialSchema";
 import { NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
-import { cryptCredentials } from '@/lib/utils';
+import { encryptCredentials } from '@/lib/utils';
 
 export async function POST(req: Request, res: NextApiResponse) {
     try {
@@ -19,7 +19,7 @@ export async function POST(req: Request, res: NextApiResponse) {
 
         const { userId, keyName, apiKey } = validatedCredential.data;
 
-        const encryptedKey = await cryptCredentials(apiKey);
+        const encryptedKey = encryptCredentials(apiKey);
 
         await prisma.credential.upsert({
             where: {                
