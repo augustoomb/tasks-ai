@@ -4,13 +4,18 @@ import { streamText } from 'ai';
 import { createOpenAI } from "@ai-sdk/openai";
 import prisma from "@/lib/prisma";
 import { decryptCredentials } from '@/lib/utils';
+import { credentialSchema } from '@/schemas/credentialSchema';
 
 
-const getCredentialsByUserId = async (userId: string) => {
-  return await prisma.credential.findMany({
+const getSpecificCredentialsByUserId = async (userId: string, keyName: string) => {
+  return await prisma.credential.findFirst({
     where: {
       userId: Number(userId),
-    }
+      keyName: keyName,
+    },
+    select: {
+      encryptedKey: true,
+    },
   });
 };
 
@@ -18,20 +23,9 @@ const getCredentialsByUserId = async (userId: string) => {
 export async function POST(req: Request) {
   const { messages, arrUserEnabledModuleIds, userId } = await req.json();
 
-  const credentials = await getCredentialsByUserId(userId);
+  const { encryptedKey } = await getSpecificCredentialsByUserId(userId, "openai_api_key") || {};
 
-  const openaiApiKeyCredential = credentials.find(
-    (credential) => credential.keyName === "openai_api_key"
-  );
-
-  const decryptOpenAIKey = decryptCredentials(openaiApiKeyCredential?.encryptedKey || '');
-
-  // console.log("KEY DESCRIPTOGRAFADA: "+decryptOpenAIKey);
-
-  // const key = decryptKey(openaiApiKeyCredential?.encryptedKey || '');
-  // console.log("KEY DESCRIPTOGRAFADA: "+key);
-
-  // console.log(openaiApiKeyCredential?.encryptedKey);
+  const decryptOpenAIKey = decryptCredentials(encryptedKey || '');
 
   // ver essa linha
   const openai = createOpenAI({ apiKey: decryptOpenAIKey });
