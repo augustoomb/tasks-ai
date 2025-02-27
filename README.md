@@ -1,6 +1,6 @@
-[![Assista ao vídeo]([https://img.youtube.com/vi/ID_DO_VIDEO/maxresdefault.jpg](https://github.com/augustoomb/tasks-ai/blob/main/prints/print-login.png))]([https://www.youtube.com/watch?v=ID_DO_VIDEO](https://www.youtube.com/watch?v=FVwCCffU8oM))
 
 
+[![Uso](https://raw.githubusercontent.com/augustoomb/tasks-ai/refs/heads/main/prints/print-login.png)](https://www.youtube.com/watch?v=FVwCCffU8oM)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
