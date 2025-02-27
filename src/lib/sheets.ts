@@ -47,7 +47,8 @@ export const getCellValueInGoogleSheet = async () => {
         const googleSheets = await google.sheets({ version: "v4", auth: googleAuth });
         const response = await googleSheets.spreadsheets.values.get({
             auth: googleAuth,
-            spreadsheetId: "1y95m64Mulm9X5B8fdv_SLVDKebfEzAQu2lKHRVBDvc4",
+            // spreadsheetId: "1y95m64Mulm9X5B8fdv_SLVDKebfEzAQu2lKHRVBDvc4",
+            spreadsheetId: "1jDaG0n_kT8br1e4qs6-HfkwK1GloHX6AU9pHmKq2gMQ",
             range: `sheet1`,
         });
 

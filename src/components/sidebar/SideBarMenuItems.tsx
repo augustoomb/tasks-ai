@@ -21,11 +21,11 @@ export default function SideBarMenuItems() {
         url: `/panel/modules`,
         icon: Package,
       },
-      {
-        title: "Chat",
-        url: "/panel/chat",
-        icon: Calendar,
-      },
+      // {
+      //   title: "Chat",
+      //   url: "/panel/chat",
+      //   icon: Calendar,
+      // },
       {
         title: "Configurações",
         url: "/panel/settings",
